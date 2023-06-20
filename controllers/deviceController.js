@@ -8,8 +8,8 @@ class DeviceController {
     try {
       let { name, price, brandId, typeId, info } = req.body;
       const { img } = req.files;
-      let fileName = uuid.v4() + ".jpeg";
-      img.mv(path.resolve(__dirname, "..", "static", fileName));
+      let fileName = uuid.v4() + ".jpg";
+      await img.mv(path.resolve(__dirname, "..", "static", fileName));
       const device = await Device.create({
         name,
         price,
@@ -22,7 +22,7 @@ class DeviceController {
         info.forEach((e) =>
           DeviceInfo.create({
             title: e.title,
-            description: e.descriprtion,
+            description: e.description,
             deviceId: device.id,
           })
         );
